@@ -1,0 +1,12 @@
+# Pico2 Pin definitions
+
+PLED = 25
+PSDA = 4
+PSCL = 5
+PCE  = 17
+PCSN = 22
+PMOSI = 19
+PMISO = 16
+PSCK  = 18
+PADC0 = 27
+PADC1 = 28

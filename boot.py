@@ -8,5 +8,6 @@ for i in range(5):
     l.toggle()
     time.sleep(.6)
     
-import nnrf
-#import k_demo
+# select which program to run
+#import np_rx
+import np_tx

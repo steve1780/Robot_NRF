@@ -14,7 +14,7 @@ from micropython import const
 
 #def_pico holds pin definitions
 #def_esp use for alternate dev board
-from def_pico import PLED, PSDA, PSCL, PCE, PCSN, PMOSI, PMISO, PSCK, PADC0, PADC1
+from def_esp32s3 import PLED, PSDA, PSCL, PCE, PCSN, PMOSI, PMISO, PSCK, PADC0, PADC1
 
 # NRF24L01 Constants
 _RX_POLL_DELAY = const(10)
@@ -81,7 +81,7 @@ def send_byte(nrf, b: int, c: int, inter_byte_ms: int = 50):
 # setup code ==================================================================
 
 # For RP2350 default SPI(0)
-spi = SPI(0, sck=Pin(PSCK), mosi=Pin(PMOSI), miso=Pin(PMISO))
+spi = SPI(1, sck=Pin(PSCK), mosi=Pin(PMOSI), miso=Pin(PMISO))
 cfg = {"spi": spi, "csn": PCSN, "ce": PCE}
 
 # lookup the spi object and created the pins from the dict data
@@ -112,7 +112,7 @@ while True:
     send_byte(nrf, 10, xP, 2)
     yP = map_range(yV, 0, 65534, 0, 255)
     send_byte(nrf, 11, yP, 2)
-    #print("Xmit: ", xP, yP)
+    print("Xmit: ", xP, yP)
  
  
  

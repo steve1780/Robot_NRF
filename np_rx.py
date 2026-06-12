@@ -8,14 +8,14 @@ import sys
 import struct
 import utime
 from machine import Pin, SPI, I2C
-from machine import Timer, ADC
+from machine import Timer, ADC, PWM
 from nrf24l01 import NRF24L01
 from micropython import const
 import ssd1306
 
 #def_pico holds pin definitions
 #def_esp use for alternate dev board
-from def_pico import PLED, PSDA, PSCL, PCE, PCSN, PMOSI, PMISO, PSCK, PADC0, PADC1
+from def_pico import PLED, PSDA, PSCL, PCE, PCSN, PMOSI, PMISO, PSCK, PADC0, PADC1, PPWM1, PPWM2
 
 # NRF24L01 Constants
 _RX_POLL_DELAY = const(50)
@@ -89,6 +89,15 @@ def responder():
             # command decode
             if c1 == 10 :
                 commands["xStick1"] = d1
+                #map_range(x, in_min, in_max, out_min, out_max)
+                pw1 = map_range(d1, 0, 255, 1000, 9000)
+                pw2 = map_range(d1, 0, 255, 9000, 1000)
+                
+                if pw1<170 or 
+                
+                serv1.duty_u16(pw1)
+                serv2.duty_u16(pw2)
+                    
                 pass   
             elif c1 == 11 :
                 commands["yStick1"] = d1
@@ -97,6 +106,9 @@ def responder():
             utime.sleep_ms(_RX_POLL_DELAY)
             x = commands["xStick1"]
             y = commands["yStick1"]
+            
+            
+            
             oled.fill(0)
             oled.text("cmd/s: ",0,0)
             #oled.text(str(int(cmd/t_interval)), 50, 0)
@@ -128,6 +140,15 @@ print("PantherBotics Receiver")
 nrf.open_tx_pipe(pipes[1])
 nrf.open_rx_pipe(1, pipes[0])
 nrf.start_listening()
+
+serv1 = PWM(Pin(PPWM1))
+serv2 = PWM(Pin(PPWM2))
+serv1.freq(50)
+serv2.freq(50)
+serv1.duty_u16(0)
+serv2.duty_u16(0)
+            
+            
 i2c = I2C(0, scl=PSCL, sda=PSDA)   # pico2 parameters
 oled = ssd1306.SSD1306_I2C(128, 32, i2c)
 oled.fill(0)

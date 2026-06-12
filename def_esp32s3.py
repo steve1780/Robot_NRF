@@ -1,0 +1,13 @@
+# ESP32-S3-N16R8 44-Pin definitions
+
+PLED = 6
+PSDA = 19
+PSCL = 18
+PCE  = 11
+PCSN = 10
+PMOSI = 13
+PMISO = 12
+PSCK  = 14
+PADC0 = 4
+PADC1 = 5
+
